@@ -349,6 +349,16 @@ fsctl_config_init(char * conf)
         gfilescan_config.scanbuf_size = DEFAULT_FS_SCANBUF_SIZE;
     }
 
+    pv = glcfg_get_param_value(config, FILESCAN_CONF_MODULE, FILESCAN_CONF_PARAM_FORCE_SAVE_SCANNING_FILE, &po)
+    if (pv != NULL)
+    {
+        gfilescan_config.force_save_scanning_file = (unsigned int)atoi(pv);
+    }
+    else
+    {
+        gfilescan_config.force_save_scanning_file = DEFAULT_FS_FORCE_SAVE_SCANNING_FILE;
+    }
+
     /* Thread pool config */
     pv=glcfg_get_param_value(config, THREAD_POOL_CONF_MODULE, THREAD_POOL_CONF_PARAM_POOL_SIZE, &po);
     if(pv!=NULL) {
@@ -461,6 +471,17 @@ fsctl_config_reload()
         gfilescan_config.save_scanning_file = DEFAULT_FS_SAVE_SCANNING_FILE;
     }
     LOGDEBUG("++save_scanning_file = %d", gfilescan_config.save_scanning_file);
+
+	pv = glcfg_get_param_value(config, FILESCAN_CONF_MODULE, FILESCAN_CONF_PARAM_FORCE_SAVE_SCANNING_FILE, &po)
+    if (pv != NULL)
+    {
+        gfilescan_config.force_save_scanning_file = (unsigned int)atoi(pv);
+    }
+    else
+    {
+        gfilescan_config.force_save_scanning_file = DEFAULT_FS_FORCE_SAVE_SCANNING_FILE;
+    }
+    LOGDEBUG("++force_save_scanning_file = %d", gfilescan_config.save_scanning_file);
 
     pv=glcfg_get_param_value(config, FILESCAN_CONF_MODULE, FILESCAN_CONF_PARAM_CACHE_SIZE, &po);
     if(pv!=NULL) {

@@ -27,6 +27,7 @@ __BEGIN_DECLS
 #define DEFAULT_FS_HASH_SIZE  (4)
 #define DEFAULT_FS_CACHE_SIZE  (16)
 #define DEFAULT_FS_SCANBUF_SIZE (1024*1024)
+#define DEFAULT_FS_FORCE_SAVE_SCANNING_FILE  (0)
 #define DEFAULT_POOL_SIZE		(20)
 #define DEFAULT_INIT_THREAD		(10)
 #define DEFAULT_MAX_TASKS		(32768)
@@ -48,6 +49,7 @@ __BEGIN_DECLS
 #define FILESCAN_CONF_PARAM_USE_FSE_SHA1    "use_fse_sha1"
 #define FILESCAN_CONF_PARAM_HIT_RATE_LIMIT "hit_rate_limit"
 #define FILESCAN_CONF_PARAM_SCANBUF_SIZE "scanbuf_size"
+#define FILESCAN_CONF_PARAM_FORCE_SAVE_SCANNING_FILE "force_save_scanning_file"
 #define THREAD_POOL_CONF_MODULE          "thread_pool"
 #define THREAD_POOL_CONF_PARAM_POOL_SIZE         "pool_size"
 #define THREAD_POOL_CONF_PARAM_INIT_THREADS         "init_threads"

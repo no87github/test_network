@@ -738,13 +738,20 @@ fallback_to_vscan_fd:
                 show_virus_result(data, fs_result->virus_result);
             }
         }
-        if (temp_file_saved) {
+        if (temp_file_saved && !gfilescan_config.force_save_scanning_file) {
             // remove temp file
             ret = unlink(tmp_filename);
             if (ret != 0) {
                 LOGERROR("unlink() return %d. errno=%d, sid=0x%08x, pid=%d, qid=%s",ret, errno, data->session_id, data->pattern_id, data->qid);
             } else {
                 LOGDEBUG("unlink(%s) success. sid=0x%08x, pid=%d, qid=%s",tmp_filename, data->session_id, data->pattern_id, data->qid);
+            }
+        }
+        else
+        {
+            if (temp_file_saved && gfilescan_config.force_save_scanning_file)
+            {
+                LOGDEBUG("temp file %s saved, sid=0x%08x, pid=%d, qid=%s", tmp_filename,data->session_id, data->pattern_id, data->qid);
             }
         }
         show_scan_result(data->fd, (char*) data->filename, &fs_result->scan_result);
