@@ -1,0 +1,221 @@
+/*
+ * vstd2category.c
+ */
+
+#include <stdlib.h>
+
+#include <vstd2category.h>
+
+typedef struct
+{
+    int vstd;
+    char *const category;
+}
+vstd2category_t;
+
+/*
+ * Note that m_vstd2category should be in ascending sorted order according to vstd.
+ */
+static const vstd2category_t m_vstd2category[]
+    = {{1, VSTD2CATEGORY_OFFICE},
+       {2, VSTD2CATEGORY_OFFICE},
+       {3, VSTD2CATEGORY_PICTURE},
+       {4, VSTD2CATEGORY_OFFICE},
+       {5, VSTD2CATEGORY_OTHER},
+       {6, VSTD2CATEGORY_PICTURE},
+       {7, VSTD2CATEGORY_EXEC},
+       {8, VSTD2CATEGORY_PICTURE},
+       {9, VSTD2CATEGORY_ARCHIVE},
+       {10, VSTD2CATEGORY_PICTURE},
+       {11, VSTD2CATEGORY_ARCHIVE},
+       {12, VSTD2CATEGORY_PICTURE},
+       {13, VSTD2CATEGORY_ARCHIVE},
+       {14, VSTD2CATEGORY_ARCHIVE},
+       {15, VSTD2CATEGORY_ARCHIVE},
+       {16, VSTD2CATEGORY_OFFICE},
+       {17, VSTD2CATEGORY_OFFICE},
+       {18, VSTD2CATEGORY_UNKNOWN}, /* ASCII Text */
+       {19, VSTD2CATEGORY_UNKNOWN},
+       {20, VSTD2CATEGORY_ARCHIVE},
+       {21, VSTD2CATEGORY_ARCHIVE},
+       {22, VSTD2CATEGORY_PICTURE},
+       {24, VSTD2CATEGORY_EXEC},
+       {23, VSTD2CATEGORY_UNKNOWN},
+       {25, VSTD2CATEGORY_ARCHIVE},
+       {26, VSTD2CATEGORY_OFFICE},
+       {27, VSTD2CATEGORY_EXEC},
+       {28, VSTD2CATEGORY_OTHER},
+       {29, VSTD2CATEGORY_OTHER},
+       {30, VSTD2CATEGORY_OFFICE},
+       {31, VSTD2CATEGORY_AUDIOVIDEO},
+       {32, VSTD2CATEGORY_AUDIOVIDEO},
+       {33, VSTD2CATEGORY_AUDIOVIDEO},
+       {34, VSTD2CATEGORY_PICTURE},
+       {35, VSTD2CATEGORY_PICTURE},
+       {36, VSTD2CATEGORY_PICTURE},
+       {37, VSTD2CATEGORY_PICTURE},
+       {38, VSTD2CATEGORY_AUDIOVIDEO},
+       {39, VSTD2CATEGORY_PICTURE},
+       {40, VSTD2CATEGORY_AUDIOVIDEO},
+       {41, VSTD2CATEGORY_PICTURE},
+       {42, VSTD2CATEGORY_PICTURE},
+       {43, VSTD2CATEGORY_AUDIOVIDEO},
+       {44, VSTD2CATEGORY_PICTURE},
+       {45, VSTD2CATEGORY_PICTURE},
+       {46, VSTD2CATEGORY_AUDIOVIDEO},
+       {47, VSTD2CATEGORY_PICTURE},
+       {48, VSTD2CATEGORY_AUDIOVIDEO},
+       {49, VSTD2CATEGORY_OFFICE},
+       {51, VSTD2CATEGORY_PICTURE},
+       {52, VSTD2CATEGORY_OTHER},
+       {53, VSTD2CATEGORY_AUDIOVIDEO},
+       {54, VSTD2CATEGORY_EXEC},
+       {57, VSTD2CATEGORY_AUDIOVIDEO},
+       {58, VSTD2CATEGORY_PICTURE},
+       {61, VSTD2CATEGORY_PICTURE},
+       {65, VSTD2CATEGORY_PICTURE},
+       {66, VSTD2CATEGORY_AUDIOVIDEO},
+       {68, VSTD2CATEGORY_PICTURE},
+       {69, VSTD2CATEGORY_PICTURE},
+       {70, VSTD2CATEGORY_PICTURE},
+       {71, VSTD2CATEGORY_EXEC},
+       {72, VSTD2CATEGORY_AUDIOVIDEO},
+       {74, VSTD2CATEGORY_PICTURE},
+       {75, VSTD2CATEGORY_AUDIOVIDEO},
+       {76, VSTD2CATEGORY_AUDIOVIDEO},
+       {78, VSTD2CATEGORY_PICTURE},
+       {79, VSTD2CATEGORY_OTHER},
+       {80, VSTD2CATEGORY_AUDIOVIDEO},
+       {81, VSTD2CATEGORY_PICTURE},
+       {83, VSTD2CATEGORY_AUDIOVIDEO},
+       {84, VSTD2CATEGORY_PICTURE},
+       {85, VSTD2CATEGORY_PICTURE},
+       {86, VSTD2CATEGORY_EXEC},
+       {87, VSTD2CATEGORY_AUDIOVIDEO},
+       {90, VSTD2CATEGORY_PICTURE},
+       {92, VSTD2CATEGORY_PICTURE},
+       {94, VSTD2CATEGORY_AUDIOVIDEO},
+       {95, VSTD2CATEGORY_AUDIOVIDEO},
+       {96, VSTD2CATEGORY_AUDIOVIDEO},
+       {97, VSTD2CATEGORY_AUDIOVIDEO},
+       {98, VSTD2CATEGORY_PICTURE},
+       {99, VSTD2CATEGORY_AUDIOVIDEO},
+       {100, VSTD2CATEGORY_AUDIOVIDEO},
+       {101, VSTD2CATEGORY_PICTURE},
+       {102, VSTD2CATEGORY_PICTURE},
+       {103, VSTD2CATEGORY_PICTURE},
+       {104, VSTD2CATEGORY_AUDIOVIDEO},
+       {106, VSTD2CATEGORY_AUDIOVIDEO},
+       {107, VSTD2CATEGORY_PICTURE},
+       {109, VSTD2CATEGORY_PICTURE},
+       {110, VSTD2CATEGORY_PICTURE},
+       {112, VSTD2CATEGORY_AUDIOVIDEO},
+       {115, VSTD2CATEGORY_ARCHIVE},
+       {116, VSTD2CATEGORY_OTHER},
+       {117, VSTD2CATEGORY_EXEC},
+       {118, VSTD2CATEGORY_EXEC},
+       {119, VSTD2CATEGORY_EXEC},
+       {120, VSTD2CATEGORY_PICTURE},
+       {121, VSTD2CATEGORY_ARCHIVE},
+       {1000, VSTD2CATEGORY_ARCHIVE},
+       {2000, VSTD2CATEGORY_ARCHIVE},
+       {2001, VSTD2CATEGORY_PICTURE},
+       {2002, VSTD2CATEGORY_OFFICE},
+       {2003, VSTD2CATEGORY_ARCHIVE},
+       {2004, VSTD2CATEGORY_ARCHIVE},
+       {2005, VSTD2CATEGORY_EXEC},
+       {4000, VSTD2CATEGORY_EXEC},
+       {4001, VSTD2CATEGORY_EXEC},
+       {4002, VSTD2CATEGORY_PICTURE},
+       {4003, VSTD2CATEGORY_ARCHIVE},
+       {4004, VSTD2CATEGORY_AUDIOVIDEO},
+       {4005, VSTD2CATEGORY_JAVA},
+       {4006, VSTD2CATEGORY_EXEC},
+       {4007, VSTD2CATEGORY_EXEC},
+       {4008, VSTD2CATEGORY_EXEC},
+       {4009, VSTD2CATEGORY_EXEC},
+       {4010, VSTD2CATEGORY_EXEC},
+       {4011, VSTD2CATEGORY_EXEC},
+       {4012, VSTD2CATEGORY_PICTURE},
+       {4013, VSTD2CATEGORY_OTHER},
+       {4014, VSTD2CATEGORY_EXEC},
+       {4015, VSTD2CATEGORY_EXEC},
+       {4016, VSTD2CATEGORY_EXEC},
+       {4017, VSTD2CATEGORY_EXEC},
+       {4018, VSTD2CATEGORY_EXEC},
+       {4019, VSTD2CATEGORY_EXEC},
+       {4020, VSTD2CATEGORY_AUDIOVIDEO},
+       {4021, VSTD2CATEGORY_PICTURE},
+       {4022, VSTD2CATEGORY_PICTURE},
+       {4023, VSTD2CATEGORY_AUDIOVIDEO},
+       {4024, VSTD2CATEGORY_PICTURE},
+       {4025, VSTD2CATEGORY_OFFICE},
+       {4026, VSTD2CATEGORY_PICTURE},
+       {4027, VSTD2CATEGORY_PICTURE},
+       {4028, VSTD2CATEGORY_AUDIOVIDEO},
+       {4029, VSTD2CATEGORY_OFFICE},
+       {4030, VSTD2CATEGORY_ARCHIVE},
+       {4031, VSTD2CATEGORY_AUDIOVIDEO},
+       {4032, VSTD2CATEGORY_OTHER},
+       {4033, VSTD2CATEGORY_OFFICE},
+       {4034, VSTD2CATEGORY_OTHER},
+       {4035, VSTD2CATEGORY_OTHER},
+       {4036, VSTD2CATEGORY_AUDIOVIDEO},
+       {4037, VSTD2CATEGORY_PICTURE},
+       {4038, VSTD2CATEGORY_OTHER},
+       {6000, VSTD2CATEGORY_ENCODED},
+       {6001, VSTD2CATEGORY_OFFICE},
+       {6002, VSTD2CATEGORY_EXEC},
+       {6003, VSTD2CATEGORY_OFFICE},
+       {6004, VSTD2CATEGORY_OFFICE},
+       {6005, VSTD2CATEGORY_PICTURE},
+       {6006, VSTD2CATEGORY_EXEC},
+       {6007, VSTD2CATEGORY_OFFICE},
+       {6008, VSTD2CATEGORY_OFFICE},
+       {6010, VSTD2CATEGORY_ENCODED},
+       {6011, VSTD2CATEGORY_EXEC},
+       {6012, VSTD2CATEGORY_EXEC},
+       {6013, VSTD2CATEGORY_EXEC},
+       {6014, VSTD2CATEGORY_AUDIOVIDEO},
+       {6015, VSTD2CATEGORY_OFFICE},
+       {6016, VSTD2CATEGORY_OFFICE}};
+
+static int compare(const void *key, const void *entry)
+{
+    if (*(int *)key < ((vstd2category_t *)entry)->vstd)
+        return -1;
+    else if (*(int *)key == ((vstd2category_t *)entry)->vstd)
+        return 0;
+    else /* *(int *)key > ((vstd2category_t *)entry)->vstd */
+        return 1;
+}
+
+const char *vstd2category(int vstd)
+{
+    vstd2category_t *result = (vstd2category_t *)
+                              bsearch(&vstd,
+                                      &m_vstd2category,
+                                      sizeof(m_vstd2category) / sizeof(m_vstd2category[0]),
+                                      sizeof(m_vstd2category[0]),
+                                      compare);
+    return result == NULL ? VSTD2CATEGORY_UNKNOWN : result->category;
+}
+
+#ifdef VSTD2CATEGORY_UNITEST
+
+#include <stdio.h>
+
+int main(void)
+{
+    while (1)
+    {
+        int i = -1;
+        scanf("%d", &i);
+        if (i == -1)
+            break;
+        printf("vstd2category(%d) = \"%s\"\n", i, vstd2category(i));
+    }
+    return 0;
+}
+
+#endif /* VSTD2CATEGORY_UNITEST */

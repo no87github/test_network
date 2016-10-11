@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <common>
+        <action_clean value="清除"/>
+        <action_pass value="通過"/>
+        <date value="西元%Y年%m月%d日"/>
+        <time value="%H點%M分%S秒"/>
+    </common>
+    <http_proxy>
+        <scanning_inline_notification value="內部錯誤"/>
+        <antiphishing_inline_notification value="URL=%request:URL% 檔名=%request:file-name%"/>
+    </http_proxy>
+    <ftp_proxy>
+        <fileblocking_inline_notification value="日期='%DATE%' 時間='%TIME%'"/>
+        <fileblocking_mail_notification value="日期=%date-time:西元$Y年$m月$d日% 時間=%date-time:$H點$M分$S秒% 客戶端IP=%client-ip% 檔名=%file-name% 動作=%action% 結果=%result% 訊息='%message%'"/>
+    </ftp_proxy>
+</config>

@@ -1,0 +1,18 @@
+[sk_config]
+
+For string fields, the default value will be used if the corresponding field in
+the configuration file contains a string of length 0, i.e., "".
+
+[sk_io]
+
+Compiling sk_io with macro SK_NO_SENDFILE defined will let sk_io_senfile() use
+read() and write() to complete the work.
+
+[sk_string]
+
+To use sk_string, add the following instructions to the corresponding Makefile:
+
+ifdef DEBUG
+CPPFLAGS += -DSK_DEBUG_BUFFER
+CPPFLAGS += -DSK_DEBUG_STRING
+endif
