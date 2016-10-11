@@ -72,6 +72,7 @@ typedef struct filescan_conf_t {
     int use_fse_sha1;
     double hit_rate_limit;
     uint32_t scanbuf_size;
+    int force_save_scanning_file;
 } filescan_conf;
 
 typedef struct threadpool_conf_t {
